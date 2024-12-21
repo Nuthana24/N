@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lost & Found Website</title>
+    <!-- Bootstrap CSS CDN -->
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Glide.js CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.core.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.theme.min.css"
+    />
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <style>
+      .navbar {
+        background-color: #343a40;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-brand,
+      .nav-link {
+        color: #ffffff !important;
+      }
+      .nav-link:hover {
+        color: #00d1b2 !important;
+      }
+      .btn-modern {
+        border-radius: 20px;
+        padding: 8px 16px;
+      }
+      .glide__slide img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+      }
+      /* Centered search bar */
+      .search-container {
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .search-input {
+        border: none;
+        border-radius: 50px;
+        padding: 10px 20px;
+        outline: none;
+        width: calc(100% - 40px);
+      }
+      .search-btn {
+        background: none;
+        border: none;
+        color: #343a40;
+        font-size: 20px;
+      }
+
+      /* Media Queries for Responsiveness */
+      @media (max-width: 768px) {
+        .navbar-nav {
+          text-align: center;
+        }
+        .btn-modern {
+          margin-top: 5px;
+        }
+        .search-container {
+          width: 90%;
+          bottom: 5px;
+        }
+        .glide__slide img {
+          height: 200px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .navbar-toggler {
+          margin-bottom: 10px;
+        }
+        .search-input {
+          padding: 8px 15px;
+        }
+      }
+
+      .fixed-megaphone-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 1000; /* Ensures it stays above other content */
+        transition: background-color 0.3s ease;
+      }
+
+      .fixed-megaphone-btn:hover {
+        background-color: #0056b3;
+      }
+
+      .fixed-bottom-btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand" href="#">Lost & Found</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="Home-tab">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?status=lost" id="lost-tab">Lost</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="?status=found" id="found-tab">Found</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('faq') }}">FAQ</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              class="btn btn-outline-primary btn-modern mr-2"
+              href="{{ url_for('login') }}"
+              >Login</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="btn btn-primary btn-modern"
+              href="{{ url_for('sign_up') }}"
+              >Sign Up</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Glide.js Carousel -->
+    <div class="glide position-relative">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+          <li class="glide__slide">
+            <img
+              src="https://via.placeholder.com/1200x400?text=Banner+1"
+              alt="Banner 1"
+            />
+          </li>
+          <li class="glide__slide">
+            <img
+              src="https://via.placeholder.com/1200x400?text=Banner+2"
+              alt="Banner 2"
+            />
+          </li>
+          <li class="glide__slide">
+            <img
+              src="https://via.placeholder.com/1200x400?text=Banner+3"
+              alt="Banner 3"
+            />
+          </li>
+        </ul>
+      </div>
+
+      <!-- Centered Search Bar -->
+      <div class="search-container text-center">
+        <form class="form-inline d-flex justify-content-between">
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Search lost or found items..."
+          />
+          <button class="search-btn" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Card Container Section -->
+    <div class="container my-5">
+      <div class="row">
+        {% for item in items %}
+        <div class="col-md-4">
+          <div class="card">
+            <img src="{{ url_for('static', filename=item.image_path) }}" alt="Item Image">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{ item.category }}</p>
+              <div class="d-flex justify-content-between">
+                <button 
+                  class="btn btn-outline-primary btn-sm toggle-details" 
+                  data-toggle="collapse" 
+                  data-target="#item{{ item.id }}-details"
+                >
+                  More
+                </button>
+              </div>
+            </div>
+
+            <!-- Additional Item Details (hidden by default) -->
+            <div id="item{{ item.id }}-details" class="collapse">
+              <div class="card-body">
+                <p><strong>Description:</strong> {{ item.description }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <p><strong>Contact Info:</strong> {{ item.contact_info }}</p>
+                <p><strong>Status:</strong> {{ item.status }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Fixed Megaphone Button with Redirect -->
+    <a
+      href="{{ url_for('report') }}"
+      class="fixed-megaphone-link"
+      aria-label="Announcement"
+    >
+      <button class="fixed-megaphone-btn">
+        <i class="fas fa-bullhorn"></i>
+      </button>
+    </a>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Glide.js JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/glide.min.js"></script>
+
+    <script>
+      // Initialize Glide with auto-play
+      new Glide(".glide", {
+        type: "carousel",
+        autoplay: 3000,
+        animationDuration: 800,
+        hoverpause: false,
+        perView: 1,
+      }).mount();
+    </script>
+
+
+    <script>
+      // Initialize Glide with auto-play
+      new Glide(".glide", {
+        type: "carousel",
+        autoplay: 3000,
+        animationDuration: 800,
+        hoverpause: false,
+        perView: 1,
+      }).mount();
+
+      // Toggle "More" / "Less" button text based on the collapse state
+      $(document).ready(function () {
+        // For each toggle button
+        $(".toggle-details").click(function () {
+          var $this = $(this);
+          var isCollapsed = $($this.data("target")).hasClass("show");
+
+          // Change text based on whether the details are shown or hidden
+          if (isCollapsed) {
+            $this.text("More");
+          } else {
+            $this.text("Less");
+          }
+        });
+      });
+    </script>
+
+    <!-- Toggle Sections (Lost / Found) -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const lostTab = document.getElementById("lost-tab");
+        const foundTab = document.getElementById("found-tab");
+        const lostContainer = document.getElementById("lost-container");
+        const foundContainer = document.getElementById("found-container");
+
+        // Set "Lost" as default
+        lostTab.classList.add("active");
+        foundTab.classList.remove("active");
+        foundContainer.style.display = "none";
+        lostContainer.style.display = "block";
+
+        // Toggle sections
+        lostTab.addEventListener("click", function () {
+          lostContainer.style.display = "block";
+          foundContainer.style.display = "none";
+          lostTab.classList.add("active");
+          foundTab.classList.remove("active");
+        });
+
+        foundTab.addEventListener("click", function () {
+          lostContainer.style.display = "none";
+          foundContainer.style.display = "block";
+          lostTab.classList.remove("active");
+          foundTab.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>

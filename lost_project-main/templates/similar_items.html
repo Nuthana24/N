@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Similar Items Found</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Similar Items Found</h1>
+    <div id="similarItems" class="card-container">
+        {% for item, score in similar_items %}
+        <div class="card">
+            <img src="{{ item.image_path }}" alt="{{ item.title }}">
+            <div class="title">{{ item.title }}</div>
+            <div class="category">{{ item.category }}</div>
+            <div class="description">{{ item.description }}</div>
+            <div class="location">{{ item.location }}</div>
+            <div class="score">Similarity: {{ "%.2f" % score }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="/">Back to Home</a>
+</body>
+</html>

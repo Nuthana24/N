@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Signup - Lost & Found</title>
+  <!-- Google Fonts for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin: 10px 0;
+      text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .form-header h2 {
+      font-weight: 700;
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      text-align: left;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      color: #666;
+      font-size: 14px;
+      display: block;
+    }
+
+    .form-control {
+      border-radius: 25px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #6a11cb;
+      box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+    }
+
+    .btn-custom {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 25px;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      background: linear-gradient(to right, #5f10a3, #1e65d4);
+      cursor: pointer;
+    }
+
+    .create-account {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .create-account a {
+      color: #6a11cb;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .create-account a:hover {
+      color: #2575fc;
+      text-decoration: underline;
+    }
+
+    /* Enhanced responsiveness */
+    @media (max-width: 576px) {
+      .form-container {
+        padding: 20px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .title {
+        font-size: 28px;
+      }
+
+      .form-header h2 {
+        font-size: 24px;
+      }
+
+      .form-control {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .btn-custom {
+        font-size: 16px;
+        padding: 10px;
+      }
+
+      .create-account {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .title {
+        font-size: 24px;
+      }
+
+      .form-container {
+        padding: 15px;
+        border-radius: 10px;
+      }
+
+      .form-header h2 {
+        font-size: 20px;
+      }
+
+      .btn-custom {
+        font-size: 14px;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="title">Lost and Found</div>
+  
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Sign Up</h2>
+    </div>
+
+    <form id="signupForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+      </div>
+
+      <button type="submit" class="btn btn-custom">Sign Up</button>
+
+      <div class="create-account">
+        Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+      </div>      
+      
+    </form>
+  </div>
+
+  <!-- Bootstrap JS and jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <!-- JustValidate CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/just-validate@4.1.0/dist/just-validate.production.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const validator = new JustValidate('#signupForm');
+
+      validator
+        .addField('#username', [
+          {
+            rule: 'required',
+            errorMessage: 'Username is required',
+          }
+        ])
+        .addField('#email', [
+          {
+            rule: 'required',
+            errorMessage: 'Email is required',
+          },
+          {
+            rule: 'email',
+            errorMessage: 'Please enter a valid email address',
+          },
+          {
+            rule: 'customRegexp',
+            value: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+            errorMessage: 'Please enter a valid Gmail address',
+          }
+        ])
+        .addField('#password', [
+          {
+            rule: 'required',
+            errorMessage: 'Password is required',
+          },
+          {
+            rule: 'minLength',
+            value: 6,
+            errorMessage: 'Password must be at least 6 characters long',
+          }
+        ])
+        .addField('#confirmPassword', [
+          {
+            rule: 'required',
+            errorMessage: 'Please confirm your password',
+          },
+          {
+            rule: 'equal',
+            value: '#password',
+            errorMessage: 'Passwords do not match',
+          }
+        ]);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        img { width: 80px; height: auto; }
+        .similar-section { margin-top: 20px; }
+        .similar-items { border: 1px solid #ddd; padding: 10px; background-color: #f9f9f9; }
+        .top-right-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .top-right-button a {
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .top-right-button a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+
+    <!-- Add Item Button -->
+    <div class="top-right-button">
+        <a href="{{ url_for('report') }}">Add Item</a>
+    </div>
+
+    <!-- Admin Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <form action="/edit/{{ item.id }}" method="POST" enctype="multipart/form-data">
+                    <td>
+                        <select name="status">
+                            <option value="Lost" {% if item.status == 'Lost' %}selected{% endif %}>Lost</option>
+                            <option value="Found" {% if item.status == 'Found' %}selected{% endif %}>Found</option>
+                        </select>
+                    </td>
+                    <td>
+                        <img src="{{ url_for('static', filename=item.image_path) }}" alt="{{ item.title }}">
+                        <input type="file" name="image">
+                    </td>
+                    <td><input type="text" name="title" value="{{ item.title }}"></td>
+                    <td><input type="text" name="category" value="{{ item.category }}"></td>
+                    <td><textarea name="description">{{ item.description }}</textarea></td>
+                    <td><input type="text" name="location" value="{{ item.location }}"></td>
+                    <td><input type="text" name="contact_info" value="{{ item.contact_info }}"></td>
+                    <td>
+                        <!-- Edit Form -->
+                        <button type="submit" style="background-color: #4CAF50; color: white;">Update</button>
+                        
+                        <!-- Delete Form -->
+                        <form method="POST" action="{{ url_for('delete_item', item_id=item.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Similar Items Section -->
+    <div class="similar-section">
+        <h2>Similar Products</h2>
+        {% for item_id, similar_list in similar_items.items() %}
+            <div class="similar-items">
+                <h3>Items similar to: {{ (items | selectattr("id", "equalto", item_id) | first).title }}</h3>
+                <ul>
+                    {% for similar_item, score in similar_list %}
+                    <li>
+                        <strong>{{ similar_item.title }}</strong> 
+                        (Similarity: {{ "%.2f"|format(score) }})
+                        - <img src="{{ url_for('static', filename=similar_item.image_path) }}" alt="{{ similar_item.title }}" width="50">
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
